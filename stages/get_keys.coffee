@@ -28,6 +28,7 @@ module.exports = (state, next) ->
 
 				if ''+res.rawBody == 'null'
 					console.log "[!] key is null", state.name, res.statusCode, res.body
+					return
 
 				fs.writeFileSync filepath, res.rawBody
 
