@@ -1,4 +1,4 @@
-Q = require '../../Q'
+Q = require '../Q'
 path = require "path"
 fs = require 'fs'
 got = require 'got'

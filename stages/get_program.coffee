@@ -1,5 +1,5 @@
 history = require '../history'
-Q = require '../../Q'
+Q = require '../Q'
 got = require 'got'
 path = require 'path'
 fs = require 'fs'

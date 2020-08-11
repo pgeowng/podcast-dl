@@ -1,4 +1,4 @@
-Q = require '../../Q'
+Q = require '../Q'
 history = require '../history'
 
 module.exports = (state, next) -> Q -> new Promise (resolve, reject) ->

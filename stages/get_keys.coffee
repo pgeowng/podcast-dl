@@ -1,4 +1,4 @@
-Q = require '../../Q'
+Q = require '../Q'
 url = require 'url'
 path = require 'path'
 got = require 'got'

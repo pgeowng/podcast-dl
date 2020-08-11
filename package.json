@@ -2,7 +2,7 @@
   "name": "onsen-dl",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.coffee",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,6 +12,7 @@
     "aes-decrypter": "^3.0.0",
     "async": "^3.2.0",
     "coffeescript": "^2.5.1",
+    "commander": "^6.0.0",
     "got": "^11.1.4",
     "jsdom": "^16.3.0",
     "node-id3": "^0.1.18"

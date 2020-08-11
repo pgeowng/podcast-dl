@@ -1,4 +1,4 @@
-Q = require '../../Q'
+Q = require '../Q'
 path = require 'path'
 child = require 'child_process'
 platform = require('os').platform()

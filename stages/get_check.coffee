@@ -1,4 +1,4 @@
-Q = require '../../Q'
+Q = require '../Q'
 defaultHeaders = require '../json/defaultHeaders.json'
 got = require 'got'
 

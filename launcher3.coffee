@@ -1,4 +1,4 @@
-Q = require '../Q'
+Q = require './Q'
 history = require './history.coffee'
 
 fs = require 'fs'
