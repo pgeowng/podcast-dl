@@ -16,13 +16,18 @@ module.exports = (state, next) ->
 			file = (''+res.body).split('\n').filter (e) ->
 				e.length > 0
 
+			if file.length < 3
+				throw new Error "file length != 3", file
+
+			newFile = file[0...3]
+
 #			if file.length != 5 or file[0][0] != '#' or file[1][0] != '#' or file[2][0] != '#'
 # 				console.log "[!] something has been changed", state.name, file
 # 				return
 
-			state.tsaudioURL = file[file.length-1]
+			state.tsaudioURL = newFile[newFile.length-1]
 
-			fs.writeFileSync path.resolve(state.tempdir, "playlist.m3u8"), file[...-1].join('\n') + "\naudio.m3u8"
+			fs.writeFileSync path.resolve(state.tempdir, "playlist.m3u8"), newFile[...-1].join('\n') + "\naudio.m3u8"
 			console.log("playlist", res.headers["set-cookie"] ? 'null')
 			state.cookie = res.headers["set-cookie"][0].split(';')[0]
 
