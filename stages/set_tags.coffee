@@ -1,7 +1,7 @@
 Q = require '../Q'
 history = require '../history'
 
-module.exports = (state, next) -> Q -> new Promise (resolve, reject) ->
+module.exports = (state, next) -> new Promise (resolve, reject) ->
 	NodeID3 = require 'node-id3'
 
 	title = [

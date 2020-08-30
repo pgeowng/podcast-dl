@@ -13,21 +13,29 @@ module.exports = (state, next) ->
 				console.log "[!] coundn't fetch playlist", state.name, res.statusCode
 				return
 
+			console.log res.body
+
 			file = (''+res.body).split('\n').filter (e) ->
 				e.length > 0
 
-			if file.length < 3
-				throw new Error "file length != 3", file
+			links = []
 
-			newFile = file[0...3]
+			for i, k in file
+				if i[0] != '#'
+					links.push
+						link: i,
+						index: k
 
-#			if file.length != 5 or file[0][0] != '#' or file[1][0] != '#' or file[2][0] != '#'
-# 				console.log "[!] something has been changed", state.name, file
-# 				return
+			console.log links
 
-			state.tsaudioURL = newFile[newFile.length-1]
+			if links.length > 1
+				console.log "removing links"
+				links.length = 1
 
-			fs.writeFileSync path.resolve(state.tempdir, "playlist.m3u8"), newFile[...-1].join('\n') + "\naudio.m3u8"
+			state.tsaudioURL = links[0].link
+
+
+			fs.writeFileSync path.resolve(state.tempdir, "playlist.m3u8"), file[...(links[0].index)].concat("audio.m3u8").join('\n')
 			console.log("playlist", res.headers["set-cookie"] ? 'null')
 			state.cookie = res.headers["set-cookie"][0].split(';')[0]
 

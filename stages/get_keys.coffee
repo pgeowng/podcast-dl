@@ -8,7 +8,7 @@ stream = require('stream');
 promisify = require('util').promisify
 pipeline = promisify stream.pipeline
 
-defaultHeaders = require '../json/defaultHeaders.json'
+headers = require('../config.json').headers
 
 
 module.exports = (state, next) ->
@@ -19,7 +19,7 @@ module.exports = (state, next) ->
 			got link, {
 				headers:
 					cookie: state.cookie
-					"User-Agent": defaultHeaders["User-Agent"]
+					"User-Agent": headers["User-Agent"]
 			}
 			.then (res) ->
 				if res.statusCode != 200

@@ -8,8 +8,7 @@ stream = require('stream');
 promisify = require('util').promisify
 pipeline = promisify stream.pipeline
 
-defaultHeaders = require '../json/defaultHeaders.json'
-
+headers = require('../config.json').headers
 
 module.exports = (state, next) ->
 	count = 0
@@ -17,7 +16,7 @@ module.exports = (state, next) ->
 	launch = (link, filepath) ->
 		Q ->
 			pipeline(
-				got.stream(link, headers: defaultHeaders),
+				got.stream(link, headers: headers),
 				fs.createWriteStream(filepath))
 			.then ->
 				if ++count == state.audio.length

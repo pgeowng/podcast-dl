@@ -19,7 +19,7 @@ defaultHeaders = require('./json/defaultHeaders.json')
 
 searchWord = "#EXT-X-KEY:METHOD=AES-128,URI="
 
-tasks = "get_program get_check get_image get_playlist get_tsaudio get_keys get_audio process_ffmpeg set_tags"
+tasks = "get_program get_check get_image get_playlist get_tsaudio get_keys get_audio process_ffmpeg"
 
 tasks = tasks.split(' ').map (e) -> require('./stages/' + e)
 

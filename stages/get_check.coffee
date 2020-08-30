@@ -1,9 +1,9 @@
 Q = require '../Q'
-defaultHeaders = require '../json/defaultHeaders.json'
+headers = require('../config.json').headers
 got = require 'got'
 
 module.exports = (state, next) -> Q ->
-	got "https://vcms-api.hibiki-radio.jp/api/v1/videos/play_check?video_id=" + state.episodeId, headers: defaultHeaders
+	got "" + state.episodeId, headers: headers
 	.then (res) ->
 		if res.statusCode != 200
 			console.log "[!] coundn't fetch check -", state.name, state.episodeId, res.statusCode

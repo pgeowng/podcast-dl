@@ -7,12 +7,10 @@ next = ->
 	load--
 	setTimeout process
 
-process = (fn = null) ->
-	if fn
-		queue.push fn
-
-	if load < max and ptr < queue.length
-		console.log ptr, queue.length
+tryLaunch = ->
+	size = Math.min max-load, queue.length - ptr
+	for i in [0...size]
+		console.log '.'
 		load++
 
 		queue[ptr++]()
@@ -20,5 +18,10 @@ process = (fn = null) ->
 		.catch (e) ->
 			console.log e
 			next()
+
+
+process = (fn = null) ->
+	if fn then queue.push fn
+	tryLaunch()
 
 module.exports = process

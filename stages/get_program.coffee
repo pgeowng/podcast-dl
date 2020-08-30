@@ -5,6 +5,8 @@ path = require 'path'
 fs = require 'fs'
 got = require 'got'
 
+log = require '../log'
+
 
 defaultHeaders = require '../json/defaultHeaders.json'
 
@@ -37,8 +39,9 @@ module.exports = (state, next) -> Q ->
 			console.log '[!] name != data.access_id', name, data.access_id
 
 		if data.episode == null or data.episode.video == null
-			console.log '[!] program', data.access_id, 'dont have episode. skipping...'
+			log.add data.access_id, "dont have episode"
 			return
+
 
 		key = [
 			data.access_id
@@ -49,8 +52,10 @@ module.exports = (state, next) -> Q ->
 		].join('\t')
 
 		if not history.check key
-			console.log '[!]', state.name, 'already downloaded, skipping...'
+			log.add state.name, "already downloaded"
 			return
+
+		log.add data.access_id, "downloading"
 
 		state._data = data
 		state.key = key
@@ -70,6 +75,6 @@ module.exports = (state, next) -> Q ->
 		state.episodeId = data.episode.video.id
 
 		if not state.tempdir?
-			state.tempdir = fs.mkdtempSync(path.resolve(require('os').tmpdir(), state.name))
+			state.tempdir = fs.mkdtempSync(path.resolve(require('os').tmpdir(), "pod-#{state.name}-"))
 
 		setTimeout -> next(state)
