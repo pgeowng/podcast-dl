@@ -1,8 +1,14 @@
 {
 	"destdir": "/home/ki/shared/001-podcasts/",
+	"-destdir": "/home/ki/git/hibiki-dl/complete",
+	"historyFile": "/home/ki/git/pod-data/hibiki.tsv",
 	"ignore": [
 		"ff",
-		"morfonica"
+		"morfonica",
+		"animania",
+		"katsugeki",
+		"rakuon",
+		"yuzuradi"
 	],
 	"headers": {
 		"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0",
