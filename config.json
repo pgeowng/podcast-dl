@@ -1,10 +1,11 @@
 {
-	"destdir": "/home/ki/shared/001-podcasts/",
+	"destdir": "/data/data/com.termux/files/home/storage/shared/001-podcasts/",
 	"-destdir": "/home/ki/git/hibiki-dl/complete",
-	"tmpdir": "/home/ki/tmp/",
-	"historyFile": "/home/ki/git/pod-data/hibiki.tsv",
+	"tmpdir": "/data/data/com.termux/files/home/git/tmp/",
+	"historyFile": "/data/data/com.termux/files/home/git/pod-data/hibiki.tsv",
 	"ignore": [
 		"ff",
+                "llss",
 		"morfonica",
 		"animania",
 		"katsugeki",
