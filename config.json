@@ -1,6 +1,7 @@
 {
 	"destdir": "/home/ki/shared/001-podcasts/",
 	"-destdir": "/home/ki/git/hibiki-dl/complete",
+	"tmpdir": "/home/ki/tmp/",
 	"historyFile": "/home/ki/git/pod-data/hibiki.tsv",
 	"ignore": [
 		"ff",

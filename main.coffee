@@ -2,8 +2,13 @@ fs = require 'fs'
 path = require 'path'
 url = require 'url'
 
+config = require('./config.json')
+Log = require('./lib/log')
+Queue = require('./lib/Queue2')
+history = require('./lib/history')
+
 cwd = require('process').cwd()
-tmpdir = require('os').tmpdir()
+tmpdir = config.tmpdir
 sep = require('path').sep
 
 got = require 'got'
@@ -11,12 +16,6 @@ stream = require 'stream'
 promisify = require('util').promisify
 pipeline = promisify stream.pipeline
 
-#launcher = require('./launcher3')
-
-config = require('./config.json')
-Log = require('./lib/log')
-Queue = require('./lib/Queue2')
-history = require('./lib/history')
 
 launchQ = Queue(1)
 downloadQ = Queue(8)
