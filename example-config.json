@@ -1,9 +1,6 @@
 {
 	"ffmpegPath": "/usr/bin/ffmpeg",
-
-
 	"destdir": "/home/ki/podcast/end",
-
 	"tmpdir": "/home/ki/podcast/tmp",
 	"historyFile": "/home/ki/podcast/data/hibiki.tsv",
 	"ignore": [
