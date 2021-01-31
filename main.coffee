@@ -8,7 +8,6 @@ Queue = require('./lib/Queue2')
 history = require('./lib/history')
 
 cwd = require('process').cwd()
-tmpdir = config.tmpdir
 sep = require('path').sep
 
 got = require 'got'
@@ -16,10 +15,15 @@ stream = require 'stream'
 promisify = require('util').promisify
 pipeline = promisify stream.pipeline
 
+stage = require('./lib/stage')
+
 
 launchQ = Queue(1)
 downloadQ = Queue(8)
 ffmpegQ = Queue()
+
+TEMPDIR = path.normalize config.tempdir
+DESTDIR = path.normalize config.destdir
 
 # program = require('commander').program
 # program.version('0.0.1')
@@ -86,9 +90,10 @@ init = ->
 
 loadProgram = (name) -> new Promise (resolveLock, reject) ->
 	log = Log.add.bind null, name
-	# log = (a) -> console.log a
+
+	# log = (a) -> console.log name, a
 	try
-		tempdir = fs.mkdtempSync("#{require('os').tmpdir()}#{sep}hibiki-dl-#{name}-") + sep
+		tempdir = fs.mkdtempSync(path.resolve(TEMPDIR, "#{name}-hibiki")) + sep
 		imagePath = path.resolve tempdir, "image"
 
 		# getProgram
@@ -133,7 +138,7 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 			episodeNumber = tmp[0]
 
 		filename = "#{episodeDate}-#{name}-#{episodeNumber}-hibiki.mp3"
-		dest = path.resolve config.destdir, filename
+		dest = path.resolve DESTDIR, filename
 
 		# getCheck
 		episodeId = _data.episode.video.id
@@ -154,7 +159,7 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 		# getPlaylist
 		res = await got playlistURL
 
-		if res.statusCode != 200
+		if res.statusCode - 200 != 0
 			throw Error "playlist status #{res.statusCode}"
 
 
@@ -179,53 +184,17 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 
 
 		# getTsaudio
-		res = await got tsaudioURL
 
-		if res.statusCode != 200
-			throw Error "tsaudio status #{res.statusCode}"
-
-		file = (''+res.body).split '\n'
-		tsStream = fs.createWriteStream path.resolve tempdir, "audio.m3u8"
-		keys = []
-		audio = []
-		keyKey = "#EXT-X-KEY:METHOD=AES-128,URI="
-
-		for line, key in file when line.length > 0
-			_file = ''+key
-			_dest = path.resolve tempdir, _file
-
-			if line[0] != '#' # audio
-
-				if url.parse(line).protocol == null # is it relative link
-					srcURL = url.resolve url.resolve(tsaudioURL, '.'), line
-				else
-					srcURL = line
-
-				audio.push
-					url: srcURL
-					dest: _dest
-
-				tsStream.write _file
-
-			else if line.slice(0, keyKey.length) == keyKey
-				l = line.indexOf('"')
-				r = line.indexOf('"', l+1)
-
-				keys.push
-					url: line[(l+1)...r]
-					dest: _dest
-
-				tsStream.write line[..l] + _file + line[r..]
-			else
-				tsStream.write line
-			tsStream.write '\n'
-
-		tsStream.end()
+		result = await stage.ts tsaudioURL, path.resolve tempdir, "audio.m3u8"
+		audioList = result.audioList
+		keyList = result.keyList
 
 
+		audioList = audioList.map (e) -> {url: e.url, dest: path.resolve(tempdir, e.dest) }
+		keyList = keyList.map (e) -> {url: e.url, dest: path.resolve(tempdir, e.dest) }
 
 		# getKeys
-		await promiseSerial keys.map (params) -> ->
+		await promiseSerial keyList.map (params) -> ->
 			log "getKeys"
 			res = await got params.url,
 				headers:
@@ -251,7 +220,7 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 
 		# getAudio
 		log "getAudio"
-		await downloadQ.parallel audio.map (e) ->
+		await downloadQ.parallel audioList.map (e) ->
 			getFile.bind(null, e)
 
 		tagsRequirement = []
@@ -302,6 +271,7 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 			NodeID3 = require 'node-id3'
 
 			title = [
+				episodeDate,
 				name,
 				episodeNumber,
 				_data.episode.name,
@@ -319,15 +289,14 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 				artist: artist
 				album: _data.episode.program_name
 				image: imagePath
-				trackNumber: episodeNumber
+				trackNumber: date
 				comment: _data.description
 
 			if not NodeID3.update tags, dest
 				throw Error "tags wasn't written"
 
-			history.save historyKey
+			history.save(historyKey)
 			log "complete"
-
 
 	catch e
 		log e
