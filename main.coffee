@@ -19,6 +19,9 @@ pipeline = promisify stream.pipeline
 stage = require('./lib/stage')
 hibiki = require('./lib/hibiki')
 
+common = require('./lib/common')
+downloadJSON = common.downloadJSON
+
 
 launchQ = Queue(1)
 downloadQ = Queue(8)
@@ -28,6 +31,9 @@ TEMPDIR = path.normalize config.tempdir
 DESTDIR = path.normalize config.destdir
 
 WORKDIR = path.normalize require('config').get('dest')
+
+
+OPTIONS_XML = headers: "X-Requested-With": "XMLHttpRequest"
 
 # program = require('commander').program
 # program.version('0.0.1')
@@ -148,22 +154,14 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 
 		dest = path.resolve WORKDIR, data.filename()
 
-		# getCheck
-		episodeDuration = _data.episode.video.duration
-
-		res = await got data.checkurl(), headers: config.headers
-
-		if res.statusCode != 200
-			throw Error "fetch check statusCode #{res.statusCode}"
-
-		playlistURL = JSON.parse(''+res.body).playlist_url
+		playlisturl = (await downloadJSON(data.checkurl(), null, OPTIONS_XML)).playlist_url
 
 
 
 
 		log "getPlaylist"
 		# getPlaylist
-		res = await got playlistURL
+		res = await got playlisturl
 
 		if res.statusCode - 200 != 0
 			throw Error "playlist status #{res.statusCode}"
