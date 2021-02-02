@@ -1,5 +1,8 @@
 {
   "ffmpeg": "C:/Users/dokidoki/bin/ffmpeg/ffmpeg.exe",
 
-  "dest": "D:/podcast/newdest/"
+  "dest": "D:/podcast/newdest/",
+  "history": "D:/git/pod-data/hibiki.tsv",
+
+  "ignore": "ff llss morfonica animania katsugeki rakuon yuzuradi"
 }

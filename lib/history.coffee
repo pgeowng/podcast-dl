@@ -1,8 +1,8 @@
 fs = require "fs"
+filepath = require('config').get('history')
 
 db = []
 
-filepath = require('../config.json').historyFile
 
 load = ->
 	#console.log(fs.readFileSync('./history.tsv'))
