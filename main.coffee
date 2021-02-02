@@ -75,6 +75,7 @@ init = ->
 		names = JSON.parse(res.body).map (p) -> p.access_id
 		filtered = names.filter (e) -> config.ignore.indexOf(e) == -1
 
+		# filtered = ['morfonica']
 
 		promiseSerial filtered.map (e) ->
 			loadProgram.bind(null, e)
@@ -86,10 +87,12 @@ init = ->
 
 
 
-
+# DEBUG = false
+DEBUG = true
 
 loadProgram = (name) -> new Promise (resolveLock, reject) ->
 	log = Log.add.bind null, name
+	if (DEBUG) then log = (...a) -> console.log(name, ...a)
 
 	# log = (a) -> console.log name, a
 	try
@@ -105,11 +108,11 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 
 		_data = JSON.parse(''+res.body)
 
-		if name != _data.access_id
-			throw Error 'getProgram name != _data.access_id -- ' + name + ' ' + _data.access_id
+		try
+			data = new stage.HibikiDataWrap(_data)
+		catch e
+			throw e
 
-		if _data.episode == null or _data.episode.video == null
-			throw Error "dont have episode"
 
 		# checkHistory
 		historyKey = [
@@ -120,7 +123,7 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 			_data.episode.video.id
 		].join '\t'
 
-		if history.isWas historyKey
+		if history.isWas data.historyKey()
 			throw Error "already downloaded"
 
 		log "downloading"
@@ -137,15 +140,13 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 		if tmp != null
 			episodeNumber = tmp[0]
 
-		filename = "#{episodeDate}-#{name}-#{episodeNumber}-hibiki.mp3"
+		filename = data.filename()
 		dest = path.resolve DESTDIR, filename
 
 		# getCheck
-		episodeId = _data.episode.video.id
 		episodeDuration = _data.episode.video.duration
-		checkURL = "https://vcms-api.hibiki-radio.jp/api/v1/videos/play_check?video_id="
 
-		res = await got "#{checkURL}#{episodeId}", headers: config.headers
+		res = await got data.checkurl(), headers: config.headers
 
 		if res.statusCode != 200
 			throw Error "fetch check statusCode #{res.statusCode}"
@@ -194,26 +195,7 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 		keyList = keyList.map (e) -> {url: e.url, dest: path.resolve(tempdir, e.dest) }
 
 		# getKeys
-		await promiseSerial keyList.map (params) -> ->
-			log "getKeys"
-			res = await got params.url,
-				headers:
-					cookie: cookie,
-					"User-Agent": config.headers["User-Agent"]
-
-			if res.statusCode != 200
-				throw Error "key statusCode #{res.statusCode}"
-
-			if ''+res.rawBody == 'null'
-				throw Error "key is null"
-
-			fs.writeFileSync params.dest, res.rawBody
-
-			if res.headers["set-cookie"]?
-				keyCookie = res.headers["set-cookie"][0].split(';')[0]
-
-			return
-
+		await stage.keys keyList, cookie
 
 		# getAudio
 		log "getAudio"
@@ -233,70 +215,16 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 		resolveLock()
 
 		# ffmpeg
-		tagsRequirement.push ffmpegQ -> new Promise (resolve, reject) ->
-			log "ffmpeg"
-
-			child = require 'child_process'
-
-			execFile = 'ffmpeg'
-			if require('os').platform() == 'win32'
-				execFile += '.exe'
-
-
-			c = child.spawn(
-				execFile,
-				[ '-allowed_extensions','ALL'
-					'-i', playlistPath.split('\\').join('/')
-					'-vn'
-					'-acodec', 'libmp3lame'
-					'-q:a', '2',
-					'-y'
-					dest],
-					stdio: 'ignore'
-				)
-
-			# c.stdout.on 'data', (d) -> console.log ''+d
-			# c.stderr.on 'data', (d) -> console.log ''+d
-
-			c.on 'error', (err) ->
-				throw err
-
-			c.on 'close', (code)->
-				if (code == null or code == 0)
-					resolve()
-				else
-					reject(Error "ffmpeg status #{code}")
-
+		await stage.ffmpeg(playlistPath, dest)
 		await Promise.all tagsRequirement
 		do ->
 			NodeID3 = require 'node-id3'
 
-			title = [
-				episodeDate,
-				name,
-				episodeNumber,
-				_data.episode.name,
-				_data.episode.program_name
-			].join ' '
 
-			artist = [].concat(_data.casts.map((e) ->
-				arr = [e.name]
-				if e.rool_name? then arr.push e.rool_name
-				return arr
-				)).join(' ')
-
-			tags =
-				title: title
-				artist: artist
-				album: _data.episode.program_name
-				image: imagePath
-				trackNumber: episodeDate
-				comment: _data.description
-
-			if not NodeID3.update tags, dest
+			if not NodeID3.update({...data.tags(), image: imagePath}, dest)
 				throw Error "tags wasn't written"
 
-			history.save(historyKey)
+			# history.save(historyKey)
 			log "complete"
 
 	catch e
