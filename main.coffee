@@ -214,9 +214,6 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 
 			return
 
-		log "resolve lock"
-		# resolve launchQ lock
-		resolveLock()
 
 		# getAudio
 		log "getAudio"
@@ -230,6 +227,10 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 		tagsRequirement.push downloadQ getFile.bind null,
 			url: imageURL
 			dest: imagePath# change to dest?
+
+		log "resolve lock"
+		# resolve launchQ lock
+		resolveLock()
 
 		# ffmpeg
 		tagsRequirement.push ffmpegQ -> new Promise (resolve, reject) ->
@@ -289,7 +290,7 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 				artist: artist
 				album: _data.episode.program_name
 				image: imagePath
-				trackNumber: date
+				trackNumber: episodeDate
 				comment: _data.description
 
 			if not NodeID3.update tags, dest
