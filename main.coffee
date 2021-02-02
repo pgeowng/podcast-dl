@@ -126,78 +126,32 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 			throw e
 
 
-		# checkHistory
-		historyKey = [
-			_data.access_id,
-			_data.id,
-			_data.episode.id,
-			_data.episode.name,
-			_data.episode.video.id
-		].join '\t'
-
 		if history.isWas data.historyKey()
 			throw Error "already downloaded"
 
-		log "downloading"
 
 
-		# preparePaths
-		tmp = new Date(_data.episode.updated_at)
-		episodeDate = ('0' + (tmp.getFullYear() % 100))[-2..] +
-			('0' + (tmp.getMonth()+1))[-2..] +
-			('0' + tmp.getDate())[-2..]
-
-		episodeNumber = ''
-		tmp = _data.episode.name.match /\d+/
-		if tmp != null
-			episodeNumber = tmp[0]
 
 		dest = path.resolve WORKDIR, data.filename()
 
+		log "check"
 		playlisturl = (await downloadJSON(data.checkurl(), null, OPTIONS_XML)).playlist_url
+		playlistpath = path.resolve(tempdir, "playlist.m3u8")
+		tsaudioname = "tsaudio.m3u8"
 
-
-
-
-		log "getPlaylist"
-		# getPlaylist
-		res = await got playlisturl
-
-		if res.statusCode - 200 != 0
-			throw Error "playlist status #{res.statusCode}"
-
-
-		file = (''+res.body).split('\n').filter (e) ->
-			e.length > 0
-
-		links = []
-		index = 0
-
-		index++ while index < file.length and file[index][0] == '#'
-
-		if index == file.length
-			throw Error "playlist link dont found \n #{file.join '\n'}"
-
-		tsaudioURL = file[index]
-		cookie = res.headers["set-cookie"][0].split(';')[0]
-		playlistPath = path.resolve tempdir, "playlist.m3u8"
-
-		fs.writeFileSync playlistPath,
-			file[...index].concat("audio.m3u8").join('\n')
-
+		log "playlist"
+		{tsaudiourl, cookie} = await hibiki.playlist(playlisturl, playlistpath, tsaudioname)
 
 
 		# getTsaudio
 
-		result = await stage.ts tsaudioURL, path.resolve tempdir, "audio.m3u8"
-		audioList = result.audioList
-		keyList = result.keyList
-
-
-		audioList = audioList.map (e) -> {url: e.url, dest: path.resolve(tempdir, e.dest) }
-		keyList = keyList.map (e) -> {url: e.url, dest: path.resolve(tempdir, e.dest) }
+		log 'ts'
+		result = await stage.ts(tsaudiourl, path.resolve(tempdir, tsaudioname))
+		audioList = result.audioList.map (e) -> {url: e.url, dest: path.resolve(tempdir, e.dest) }
+		keyList = result.keyList.map (e) -> {url: e.url, dest: path.resolve(tempdir, e.dest) }
 
 		# getKeys
+		log 'keys'
 		await stage.keys keyList, cookie
 
 		# getAudio
@@ -218,7 +172,7 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 		resolveLock()
 
 		# ffmpeg
-		await stage.ffmpeg(playlistPath, dest)
+		await stage.ffmpeg(playlistpath, dest)
 		await Promise.all tagsRequirement
 		do ->
 			NodeID3 = require 'node-id3'
@@ -227,7 +181,7 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 			if not NodeID3.update({...data.tags(), image: imagePath}, dest)
 				throw Error "tags wasn't written"
 
-			# history.save(historyKey)
+			# history.save(data.historyKey())
 			log "complete"
 
 	catch e
