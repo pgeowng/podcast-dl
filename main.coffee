@@ -19,8 +19,7 @@ pipeline = promisify stream.pipeline
 stage = require('./lib/stage')
 hibiki = require('./lib/hibiki')
 
-common = require('./lib/common')
-downloadJSON = common.downloadJSON
+{downloadJSON, downloadBinary} = require('./lib/common')
 
 
 launchQ = Queue(1)
@@ -109,21 +108,11 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 		tempdir = path.resolve(WORKDIR, ".pod-hibiki-"+name) + sep
 		fse.ensureDirSync(tempdir)
 		# tempdir = fs.mkdtempSync(path.resolve(TEMPDIR, "#{name}-hibiki")) + sep
-		imagePath = path.resolve tempdir, "image"
+		imagepath = path.resolve tempdir, "image"
 
 		# getProgram
-		res = await got "https://vcms-api.hibiki-radio.jp/api/v1/programs/#{name}",
-			headers: config.headers
-
-		if res.statusCode != 200
-			throw Error "getProgram status #{res.statusCode}"
-
-		_data = JSON.parse(''+res.body)
-
-		try
-			data = new hibiki.DataWrap(_data)
-		catch e
-			throw e
+		_data = await downloadJSON("https://vcms-api.hibiki-radio.jp/api/v1/programs/#{name}", null, OPTIONS_XML)
+		data = new hibiki.DataWrap(_data)
 
 
 		if history.isWas data.historyKey()
@@ -159,30 +148,24 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 		await downloadQ.parallel audioList.map (e) ->
 			getFile.bind(null, e)
 
-		tagsRequirement = []
+
+		log 'ffmpeg'
+		muxPromise = stage.ffmpeg(playlistpath, dest)
 
 		# getImage
-		imageURL = _data.pc_image_url
-		tagsRequirement.push downloadQ getFile.bind null,
-			url: imageURL
-			dest: imagePath# change to dest?
 
-		log "resolve lock"
+		log 'image start'
+		await downloadBinary data.imageurl(), imagepath
+		log 'image done'
+		muxPromise.then ->
+			log 'tags'
+			await stage.tags({...data.tags(), image: imagepath}, dest)
+			history.save(data.historyKey())
+
+
+
 		# resolve launchQ lock
 		resolveLock()
-
-		# ffmpeg
-		await stage.ffmpeg(playlistpath, dest)
-		await Promise.all tagsRequirement
-		do ->
-			NodeID3 = require 'node-id3'
-
-
-			if not NodeID3.update({...data.tags(), image: imagePath}, dest)
-				throw Error "tags wasn't written"
-
-			# history.save(data.historyKey())
-			log "complete"
 
 	catch e
 		log e
