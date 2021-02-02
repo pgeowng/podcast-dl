@@ -3,10 +3,14 @@ fse = require 'fs-extra'
 path = require 'path'
 url = require 'url'
 
+async = require('async')
+
 config = require('./config.json')
 Log = require('./lib/log')
 Queue = require('./lib/Queue2')
 history = require('./lib/history')
+
+
 
 cwd = require('process').cwd()
 sep = require('path').sep
@@ -76,30 +80,15 @@ getFile = (params) ->
 		got(params.url, isStream: true, headers: config.headers),
 		fs.createWriteStream(params.dest))
 
-init = ->
-	try
-		console.log 'fetching names...'
-		res = await got "https://vcms-api.hibiki-radio.jp/api/v1//programs?limit=99&page=1",
-			headers: config.headers
-		names = JSON.parse(res.body).map (p) -> p.access_id
-		filtered = names.filter (e) -> config.ignore.indexOf(e) == -1
-
-		# filtered = ['morfonica']
-
-		promiseSerial filtered.map (e) ->
-			loadProgram.bind(null, e)
-
-
-	catch e
-		console.log "get names error #{e}"
-
 
 
 
 # DEBUG = false
 DEBUG = true
+# DEBUG_SKIP_AFTER_KEYS = true
+DEBUG_SKIP_AFTER_KEYS = false
 
-loadProgram = (name) -> new Promise (resolveLock, reject) ->
+loadProgram = (name) ->
 	log = Log.add.bind null, name
 	if (DEBUG) then log = (...a) -> console.log(name, ...a)
 
@@ -143,8 +132,10 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 		log 'keys'
 		await stage.keys keyList, cookie
 
+		if (DEBUG_SKIP_AFTER_KEYS)
+			return
 		# getAudio
-		log "getAudio"
+		log "audio"
 		await downloadQ.parallel audioList.map (e) ->
 			getFile.bind(null, e)
 
@@ -162,17 +153,30 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 			await stage.tags({...data.tags(), image: imagepath}, dest)
 			history.save(data.historyKey())
 
-
-
-		# resolve launchQ lock
-		resolveLock()
-
 	catch e
 		log e
-		resolveLock()
-		return
+
+	return
 
 
+launch = (names) ->
+	async.eachSeries names, loadProgram,
+
+main = ->
+	try
+		console.log 'fetching names...'
 
 
-init()
+		json = await downloadJSON("https://vcms-api.hibiki-radio.jp/api/v1//programs?limit=99&page=1",null, OPTIONS_XML)
+
+		names = json.map((p) -> p.access_id).filter (e) -> config.ignore.indexOf(e) == -1
+
+		# filtered = ['morfonica']
+
+		launch(names)
+	catch e
+		console.log "get names error #{e}"
+
+# main()
+
+launch(['morfonica'])
