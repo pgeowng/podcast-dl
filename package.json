@@ -13,6 +13,7 @@
     "async": "^3.2.0",
     "coffeescript": "^2.5.1",
     "commander": "^6.0.0",
+    "config": "^3.3.3",
     "fs-extra": "^9.1.0",
     "got": "^11.1.4",
     "jsdom": "^16.3.0",
