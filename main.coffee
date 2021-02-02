@@ -7,7 +7,6 @@ async = require('async')
 
 config = require('./config.json')
 Log = require('./lib/log')
-Queue = require('./lib/Queue2')
 history = require('./lib/history')
 
 
@@ -25,14 +24,10 @@ hibiki = require('./lib/hibiki')
 
 {downloadJSON, downloadBinary} = require('./lib/common')
 
-
-launchQ = Queue(1)
-downloadQ = Queue(8)
-ffmpegQ = Queue()
-
 TEMPDIR = path.normalize config.tempdir
 DESTDIR = path.normalize config.destdir
 
+LIMIT_AUDIO = 6
 WORKDIR = path.normalize require('config').get('dest')
 
 
@@ -136,8 +131,8 @@ loadProgram = (name) ->
 			return
 		# getAudio
 		log "audio"
-		await downloadQ.parallel audioList.map (e) ->
-			getFile.bind(null, e)
+		await async.eachLimit audioList, LIMIT_AUDIO, (params) ->
+			await downloadBinary params.url, params.dest
 
 
 		log 'ffmpeg'
