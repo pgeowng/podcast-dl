@@ -1,3 +1,5 @@
 {
-  "ffmpeg": "C:/Users/dokidoki/bin/ffmpeg/ffmpeg.exe"
+  "ffmpeg": "C:/Users/dokidoki/bin/ffmpeg/ffmpeg.exe",
+
+  "dest": "D:/podcast/newdest/"
 }

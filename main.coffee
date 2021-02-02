@@ -1,4 +1,5 @@
 fs = require 'fs'
+fse = require 'fs-extra'
 path = require 'path'
 url = require 'url'
 
@@ -24,6 +25,8 @@ ffmpegQ = Queue()
 
 TEMPDIR = path.normalize config.tempdir
 DESTDIR = path.normalize config.destdir
+
+WORKDIR = path.normalize require('config').get('dest')
 
 # program = require('commander').program
 # program.version('0.0.1')
@@ -96,7 +99,9 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 
 	# log = (a) -> console.log name, a
 	try
-		tempdir = fs.mkdtempSync(path.resolve(TEMPDIR, "#{name}-hibiki")) + sep
+		tempdir = path.resolve(WORKDIR, ".pod-hibiki-"+name) + sep
+		fse.ensureDirSync(tempdir)
+		# tempdir = fs.mkdtempSync(path.resolve(TEMPDIR, "#{name}-hibiki")) + sep
 		imagePath = path.resolve tempdir, "image"
 
 		# getProgram
@@ -140,8 +145,7 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 		if tmp != null
 			episodeNumber = tmp[0]
 
-		filename = data.filename()
-		dest = path.resolve DESTDIR, filename
+		dest = path.resolve WORKDIR, data.filename()
 
 		# getCheck
 		episodeDuration = _data.episode.video.duration
