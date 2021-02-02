@@ -17,6 +17,7 @@ promisify = require('util').promisify
 pipeline = promisify stream.pipeline
 
 stage = require('./lib/stage')
+hibiki = require('./lib/hibiki')
 
 
 launchQ = Queue(1)
@@ -114,7 +115,7 @@ loadProgram = (name) -> new Promise (resolveLock, reject) ->
 		_data = JSON.parse(''+res.body)
 
 		try
-			data = new stage.HibikiDataWrap(_data)
+			data = new hibiki.DataWrap(_data)
 		catch e
 			throw e
 
