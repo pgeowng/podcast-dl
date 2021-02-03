@@ -23,7 +23,6 @@ hibiki = require('./lib/hibiki')
 
 {downloadJSON, downloadBinary} = require('./lib/common')
 
-
 LIMIT_AUDIO = 6
 config = require('config')
 WORKDIR = path.normalize config.get('dest')
