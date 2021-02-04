@@ -86,7 +86,7 @@ loadProgram = (name) ->
 			log 'tags'
 			await stage.tags({...data.tags(), image: imagepath}, dest)
 			log 'complete'
-			# history.save(data.historyKey())
+			history.save(data.historyKey())
 		.catch (e) ->
 			log 'tags error ' + e
 
