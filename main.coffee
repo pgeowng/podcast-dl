@@ -96,20 +96,22 @@ loadProgram = (name) ->
 	return
 
 
-launch = (names) ->
-	async.eachSeries names, loadProgram,
+# launch = (names) ->
+# 	async.eachSeries names, loadProgram,
 
-main = ->
-	try
-		console.log 'fetching names...'
-
-		json = await downloadJSON("https://vcms-api.hibiki-radio.jp/api/v1//programs?limit=99&page=1",null, OPTIONS_XML)
-		names = json.map((p) -> p.access_id).filter (e) -> IGNORE_NAMES.indexOf(e) == -1
-
-		launch(names)
-	catch e
-		console.log "get names error #{e}"
-
+# main = ->
 # main()
 
-launch(['morfonica'])
+module.exports =
+	listNames: ->
+		try
+			# console.log 'fetching names...'
+
+			json = await downloadJSON("https://vcms-api.hibiki-radio.jp/api/v1//programs?limit=99&page=1",null, OPTIONS_XML)
+			names = json.map((p) -> p.access_id).filter (e) -> IGNORE_NAMES.indexOf(e) == -1
+			return names
+		catch e
+			console.log "get names error #{e}"
+
+	launch: (name) ->
+		await loadProgram(name)
