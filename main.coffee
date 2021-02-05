@@ -35,18 +35,18 @@ DEBUG = true
 # DEBUG_SKIP_AFTER_KEYS = true
 DEBUG_SKIP_AFTER_KEYS = false
 
-loadProgram = (name) ->
+launch = (name) ->
 	log = Log.add.bind null, name
 	if (DEBUG) then log = (...a) -> console.log(name, ...a)
 
-	try
-		log 'program'
-		_data = await downloadJSON("https://vcms-api.hibiki-radio.jp/api/v1/programs/#{name}", null, OPTIONS_XML)
-		data = new hibiki.DataWrap(_data)
+	log 'program'
+	_data = await downloadJSON("https://vcms-api.hibiki-radio.jp/api/v1/programs/#{name}", null, OPTIONS_XML)
+	data = new hibiki.DataWrap(_data)
 
-		if history.isWas data.historyKey()
-			throw Error "already downloaded"
+	if history.isWas data.historyKey()
+		throw Error "already downloaded"
 
+	data.load = ->
 		tempdir = path.resolve(WORKDIR, ".pod-hibiki-"+name) + sep
 		fse.ensureDirSync(tempdir)
 		imagepath = path.resolve tempdir, "image"
@@ -90,11 +90,7 @@ loadProgram = (name) ->
 		.catch (e) ->
 			log 'tags error ' + e
 
-	catch e
-		log e
-
-	return
-
+	return data
 
 # launch = (names) ->
 # 	async.eachSeries names, loadProgram,
@@ -103,6 +99,7 @@ loadProgram = (name) ->
 # main()
 
 module.exports =
+	launch: launch,
 	listNames: ->
 		try
 			# console.log 'fetching names...'
@@ -113,5 +110,3 @@ module.exports =
 		catch e
 			console.log "get names error #{e}"
 
-	launch: (name) ->
-		await loadProgram(name)
