@@ -1,27 +1,25 @@
 fs = require "fs"
-filepath = require('config').get('history')
+# filepath = require('config').get('history')
 
 db = []
 
 
-load = ->
-	#console.log(fs.readFileSync('./history.tsv'))
-	db = (''+fs.readFileSync(filepath)).split('\n')
+module.exports = (filepath) ->
+	load = ->
+		#console.log(fs.readFileSync('./history.tsv'))
+		db = (''+fs.readFileSync(filepath)).split('\n')
+
+	check = (entry) ->
+		load()
+		return binary_check(entry)
 
 
-module.exports.check = (entry) ->
-	load()
-	return not binary_check(entry)
+	save = (entry) ->
+		db.push entry
+		db.sort()
+		fs.writeFileSync(filepath, db.join('\n'))
 
-module.exports.isWas = (entry) ->
-	load()
-	return binary_check(entry)
-
-
-module.exports.save = (entry) ->
-	db.push entry
-	db.sort()
-	fs.writeFileSync(filepath, db.join('\n'))
+	return {check, save}
 
 binary_check = (str) ->
 	left = 0

@@ -1,10 +1,9 @@
 async = require('async')
-hibiki = require('./main')
 
-do ->
+module.exports = (options) ->
+  hibiki = require('./main')(options)
   console.log('fetching names...')
   names = await hibiki.listNames()
-  names = names.slice(0, 5)
   items = await async.mapSeries names, async.reflect(hibiki.launch)
 
   items = items.filter (e, i) ->
