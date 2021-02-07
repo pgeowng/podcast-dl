@@ -4,7 +4,9 @@ fs = require "fs"
 db = []
 
 
-module.exports = (filepath) ->
+module.exports = do () ->
+	filepath = process.env.HISTORY_FILE
+
 	load = ->
 		#console.log(fs.readFileSync('./history.tsv'))
 		db = (''+fs.readFileSync(filepath)).split('\n')
@@ -12,7 +14,6 @@ module.exports = (filepath) ->
 	check = (entry) ->
 		load()
 		return binary_check(entry)
-
 
 	save = (entry) ->
 		db.push entry
