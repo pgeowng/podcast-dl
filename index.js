@@ -2,7 +2,7 @@ require('dotenv').config()
 const async = require('async')
 
 const nameMap = {
-  // 'hibiki':
+  hibiki: require('./lib/hibiki'),
   onsen: require('./lib/onsen'),
 }
 
@@ -24,12 +24,13 @@ const providers = Object.keys(nameMap)
     onsen: 'ONSEN_IGNORE_NAMES',
   }
 
-  process.env['IGNORE_NAMES'] = process.env[mmap[providerName]]
-
-  const provider = nameMap[providerName]({}) // FIXME
+  const IGNORE_NAMES = process.env[mmap[providerName]].split(' ')
+  const provider = nameMap[providerName]
 
   process.stdout.write('fetching names...')
-  let names = await provider.loadList() //.slice(0, 5)
+  let names = await provider.loadList()
+
+  names = names.filter((e) => IGNORE_NAMES.indexOf(e) === -1)
 
   console.log(' ', names.length, 'entries')
   let items = await async.mapSeries(names, async.reflect(provider.check))
