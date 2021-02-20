@@ -24,7 +24,7 @@ const providers = Object.keys(nameMap)
     onsen: 'ONSEN_IGNORE_NAMES',
   }
 
-  const IGNORE_NAMES = process.env[mmap[providerName]].split(' ')
+  const IGNORE_NAMES = (process.env[mmap[providerName]] || '').split(' ')
   const provider = nameMap[providerName]
 
   process.stdout.write('fetching names...')
