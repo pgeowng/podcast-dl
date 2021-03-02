@@ -1,12 +1,9 @@
 {
-  "name": "onsen-dl",
-  "version": "1.0.0",
-  "description": "",
-  "main": "main.coffee",
-  "scripts": {
-    "compile": "coffee -c **/*.coffee"
-  },
-  "author": "",
+  "name": "podcast-dl",
+  "version": "0.2.0",
+  "description": "podcast loader from various sites",
+  "main": "index.js",
+  "author": "umgi",
   "license": "ISC",
   "dependencies": {
     "aes-decrypter": "^3.0.0",
