@@ -17,14 +17,16 @@ const logDebug = console.log
 
 const logState = (name, state) => console.log(`[${state}] ${name}`)
 
-const randName = require('./lib/common/randomName')()
+const randName = (...args) => 
+  [+new Date(), ...args, Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString(36)].join('-')
+
 let size = 0
 let count = 0
 
 const load = (provider, history) => async (item) => {
   console.log('\nloading', item.filename, '-', ++count, '/', size)
   const workdir = path.normalize(process.env.WORKDIR)
-  const tempdir = path.resolve(process.env.WORKDIR, '.' + randName())
+  const tempdir = path.resolve(process.env.WORKDIR, '.' + randName(item.filename))
   const resolveTemp = path.resolve.bind(null, tempdir)
   fse.ensureDirSync(tempdir)
 
