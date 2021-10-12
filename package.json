@@ -3,6 +3,9 @@
   "version": "0.2.0",
   "description": "podcast loader from various sites",
   "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
   "author": "umgi",
   "license": "ISC",
   "dependencies": {
@@ -23,6 +26,7 @@
     "domhandler": "^3.0.0",
     "domutils": "^2.1.0",
     "htmlparser2": "^4.1.0",
+    "jest": "^27.2.5",
     "nodemon": "^2.0.4"
   }
 }

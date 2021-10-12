@@ -1,6 +1,7 @@
 require('dotenv').config()
 const async = require('async')
 const assure = require('./lib/common/assure')
+const fs = require('fs')
 const fse = require('fs-extra')
 const path = require('path')
 
@@ -17,8 +18,12 @@ const logDebug = console.log
 
 const logState = (name, state) => console.log(`[${state}] ${name}`)
 
-const randName = (...args) => 
-  [+new Date(), ...args, Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString(36)].join('-')
+const randName = (...args) =>
+  [
+    +new Date(),
+    ...args,
+    Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString(36),
+  ].join('-')
 
 let size = 0
 let count = 0
@@ -26,7 +31,10 @@ let count = 0
 const load = (provider, history) => async (item) => {
   console.log('\nloading', item.filename, '-', ++count, '/', size)
   const workdir = path.normalize(process.env.WORKDIR)
-  const tempdir = path.resolve(process.env.WORKDIR, '.' + randName(item.filename))
+  const tempdir = path.resolve(
+    process.env.WORKDIR,
+    '.' + randName(item.filename)
+  )
   const resolveTemp = path.resolve.bind(null, tempdir)
   fse.ensureDirSync(tempdir)
 
@@ -55,7 +63,7 @@ const load = (provider, history) => async (item) => {
 
   const historySaveTask = (async () => {
     await ffmpegTask
-    history.save(item.historyKey)
+    await history.save(item.historyKey)
   })()
 
   return audioTask.then((e) => {})
@@ -67,8 +75,39 @@ const providers = Object.keys(nameMap)
   const verbose = process.env.VERBOSE
   const debug = process.env.DEBUG
   const skipTrial = process.env.SKIP_TRIAL
-  const history = await require('./lib/history')
   const workdir = path.normalize(process.env.WORKDIR || '')
+
+  const H = require('./lib/history')
+  let historyFile = null,
+    historyLockFile = null,
+    writeHistory = false
+
+  if (!process.env.HISTORY_FILE) {
+    console.log('[warn] empty HISTORY_FILE field: ignoring history')
+  } else {
+    historyFile = path.normalize(process.env.HISTORY_FILE)
+  }
+
+  if (!process.env.HISTORY_LOCK_FILE) {
+    console.log('[warn] empty HISTORY_LOCK_FILE field: ignoring history write')
+  } else {
+    historyLockFile = path.normalize(process.env.HISTORY_LOCK_FILE)
+  }
+
+  writeHistory = !!process.env.WRITE_HISTORY
+
+  const history = H(historyFile, historyLockFile, writeHistory)
+
+  if (!process.env.FFMPEG) {
+    console.log('[err] empty FFMPEG binary path')
+    process.exit()
+  }
+
+  const ff = require('path').normalize(process.env.FFMPEG)
+  if (!fs.existsSync(ff)) {
+    console.log('[err] FFMPEG is not exists. check file extention: ' + ff)
+    process.exit()
+  }
 
   try {
     fse.ensureDirSync(workdir)
@@ -101,7 +140,7 @@ const providers = Object.keys(nameMap)
 
   const providerList = assure(provider, 'list', 'asyncfunction')
   let names = await providerList()
-  // names = ['joshikin']
+  names = ['onsenking']
   names = names.filter((e) => IGNORE_NAMES.indexOf(e) === -1)
 
   console.log(names.length)
@@ -150,8 +189,11 @@ const providers = Object.keys(nameMap)
   }
 
   // check history
-  items = items.filter((e) => {
-    const result = history.check(e.historyKey)
+  const checked = await Promise.all(
+    items.map((e) => history.check(e.historyKey))
+  )
+  items = items.filter((e, i) => {
+    const result = checked[i]
     if (verbose && result) {
       logState(e.filename, 'downloaded')
     }
