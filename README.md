@@ -12,23 +12,32 @@ npm install
 Then you should create .env file and provide some paths
 
 ```
-FFMPEG=D:/bin/ffmpeg/ffmpeg.exe
+FFMPEG=c:/bin/ffmpeg/ffmpeg.exe # windows
+FFMPEG=/usr/bin/ffmpeg # linux
+
 WORKDIR=D:/podcast/
 
 # set empty if you wanna download a preview of the show
 # SKIP_TRIAL=yes
 
-# set empty if you want not to save download history
-# WRITE_HISTORY=yes
-# HISTORY_FILE=D:/git/somefile.tsv
+# optional - always download, read history or readwrite history
+HISTORY_FILE=./cache/_history
+HISTORY_LOCK_FILE=./cache/_history_lock
+WRITE_HISTORY=1  #optional
 
-# how many chunks of audio will be downloaded at the same time 
-# if vpn is used, then it is better to put 6. as the connection will be interrupted 
+# how many chunks of audio will be downloaded at the same time
+# if vpn is used, then it is better to put 6. as the connection will be interrupted
 AUDIO_LIMIT=10
 
-# ignore shows you don't want to download 
+# ignore shows you don't want to download
 # HIBIKI_IGNORE_NAMES=ff llss morfonica animania katsugeki rakuon yuzuradi
 # ONSEN_IGNORE_NAMES=
+
+# debug output
+# DEBUG=1
+
+# verbose output
+# VERBOSE=1
 ```
 
 # Launch

@@ -1,12 +1,12 @@
 {
-  "name": "onsen-dl",
-  "version": "1.0.0",
-  "description": "",
-  "main": "main.coffee",
+  "name": "podcast-dl",
+  "version": "0.2.0",
+  "description": "podcast loader from various sites",
+  "main": "index.js",
   "scripts": {
-    "compile": "coffee -c **/*.coffee"
+    "test": "jest"
   },
-  "author": "",
+  "author": "umgi",
   "license": "ISC",
   "dependencies": {
     "aes-decrypter": "^3.0.0",
@@ -26,6 +26,7 @@
     "domhandler": "^3.0.0",
     "domutils": "^2.1.0",
     "htmlparser2": "^4.1.0",
+    "jest": "^27.2.5",
     "nodemon": "^2.0.4"
   }
 }
