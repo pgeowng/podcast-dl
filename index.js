@@ -40,13 +40,14 @@ const load = (provider, history) => async (item) => {
 
   const playlistHook = assure(provider, 'playlistHook', 'asyncfunction')
   const playlistTask = playlistHook(item)
+  const settings = await playlistTask
 
   const preloadTask = (async () => {
-    const result = await playlistTask
-    return tasks.preloadTask({ ...result, resolveTemp })
+    await playlistTask
+    return tasks.preloadTask({ ...settings, resolveTemp })
   })()
 
-  const audioTask = tasks.audioTask({ preloadTask })
+  const audioTask = tasks.audioTask({ ...settings, preloadTask })
 
   const imageTask = tasks.imageTask({
     imageUrl: item.tags.image,
@@ -140,7 +141,6 @@ const providers = Object.keys(nameMap)
 
   const providerList = assure(provider, 'list', 'asyncfunction')
   let names = await providerList()
-  names = ['onsenking']
   names = names.filter((e) => IGNORE_NAMES.indexOf(e) === -1)
 
   console.log(names.length)
