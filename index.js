@@ -78,7 +78,7 @@ const providers = Object.keys(nameMap)
   const skipTrial = process.env.SKIP_TRIAL
   const workdir = path.normalize(process.env.WORKDIR || '')
 
-  const H = require('./lib/history')
+  const H = require('./history')
   let historyFile = null,
     historyLockFile = null,
     writeHistory = false

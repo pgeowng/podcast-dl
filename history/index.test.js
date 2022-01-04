@@ -1,17 +1,18 @@
 const fs = require('fs')
-const history = require('../lib/history')
+const history = require('./index.js')
+
+const prefix = (file) => `./.test/${file}`
 
 test('no history file', async () => {
   const h = history()
 
   expect(await h.check()).toBe(false)
   expect(await h.save()).toBe(false)
-  console.log(process.cwd())
 })
 
 test('history readonly', async () => {
-  const histfile = './tests/__history'
-  const lockfile = './tests/__lockfile'
+  const histfile = prefix('__history')
+  const lockfile = prefix('__lockfile')
 
   // prepare
   if (fs.existsSync(histfile)) fs.rmSync(histfile)
@@ -38,8 +39,8 @@ test('history readonly', async () => {
 })
 
 test('history readwrite', async () => {
-  const histfile = './tests/__history'
-  const lockfile = './tests/__lockfile'
+  const histfile = prefix('__history')
+  const lockfile = prefix('__lockfile')
   let p
 
   // prepare
