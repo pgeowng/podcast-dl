@@ -1,6 +1,7 @@
-require('dotenv').config()
+// require('dotenv').config()
 const async = require('async')
 const assure = require('./lib/common/assure')
+const config = require('./config')
 const fs = require('fs')
 const fse = require('fs-extra')
 const path = require('path')
@@ -98,11 +99,6 @@ const providers = Object.keys(nameMap)
   writeHistory = !!process.env.WRITE_HISTORY
 
   const history = H(historyFile, historyLockFile, writeHistory)
-
-  if (!process.env.FFMPEG) {
-    console.log('[err] empty FFMPEG binary path')
-    process.exit()
-  }
 
   const ff = require('path').normalize(process.env.FFMPEG)
   if (!fs.existsSync(ff)) {
