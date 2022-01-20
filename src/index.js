@@ -78,7 +78,6 @@ const providers = Object.keys(nameMap)
   const debug = process.env.DEBUG
   const skipTrial = process.env.SKIP_TRIAL
   const workdir = path.normalize(process.env.WORKDIR || '')
-
   const H = require('./history')
   let historyFile = null,
     historyLockFile = null,
@@ -100,11 +99,11 @@ const providers = Object.keys(nameMap)
 
   const history = H(historyFile, historyLockFile, writeHistory)
 
-  const ff = require('path').normalize(process.env.FFMPEG)
-  if (!fs.existsSync(ff)) {
-    console.log('[err] FFMPEG is not exists. check file extention: ' + ff)
-    process.exit()
-  }
+  // const ff = require('path').normalize(process.env.FFMPEG)
+  // if (!fs.existsSync(ff)) {
+  //   console.log('[err] FFMPEG is not exists. check file extention: ' + ff)
+  //   process.exit()
+  // }
 
   try {
     fse.ensureDirSync(workdir)

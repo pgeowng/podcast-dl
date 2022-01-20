@@ -1,28 +1,19 @@
-const path = require("path");
-const fs = require("fs");
-const dotenv = require("dotenv");
-const config = dotenv.config();
+const path = require('path')
+const fs = require('fs')
+const dotenv = require('dotenv')
+const config = dotenv.config()
+const { lookpath } = require('lookpath')
 
 if (config.error) {
-	throw config.error;
+  throw config.error
 }
 
-const result = config.parsed;
+const result = config.parsed
 
-const err = {
-	emptyFFMPEG: "empty .env FFMPEG",
-	noentFFMPEG: "no such file or directory: " + result.FFMPEG,
-};
+;(async () => {
+  ffmpeg = await lookpath('ffmpeg')
+  if (ffmpeg == null) throw 'err'
+  result.ffmpeg = ffmpeg
+})()
 
-try {
-	if (!result.FFMPEG) throw err.emptyFFMPEG;
-
-	const ff = path.normalize(result.FFMPEG);
-	if (ff === "." || !fs.existsSync(ff)) throw err.noentFFMPEG;
-	result.FFMPEG = ff;
-
-	module.exports = result;
-} catch (e) {
-	console.error("[fatal]", e);
-	process.exit();
-}
+module.exports = result

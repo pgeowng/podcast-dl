@@ -1,16 +1,17 @@
 const child = require('child_process')
 const path = require('path')
+const config = require('../config')
 
 const fse = require('fs-extra')
 
 const DEBUG = false
 // const DEBUG = true
 
-module.exports = (input, output) => {
+module.exports = async (input, output) => {
+  const ffmpeg = config.ffmpeg
   let options = {}
   if (!DEBUG) options = { stdio: 'ignore' }
 
-  // console.log(path.dirname(output))
   fse.ensureDirSync(path.dirname(output))
 
   input = input.split('\\').join('/')
@@ -21,7 +22,7 @@ module.exports = (input, output) => {
     if (DEBUG) console.log('ffmpeg launch')
 
     const c = child.spawn(
-      process.env.FFMPEG,
+      config.ffmpeg,
       [
         '-allowed_extensions',
         'ALL',
