@@ -1,16 +1,15 @@
-// require('dotenv').config()
+require('dotenv').config()
 const async = require('async')
-const assure = require('./common/assure')
-const config = require('./config')
+const assure = require('./lib/common/assure')
 const fs = require('fs')
 const fse = require('fs-extra')
 const path = require('path')
 
-const tasks = require('./tasks')
+const tasks = require('./lib/tasks')
 
 const nameMap = {
-  hibiki: require('./hibiki'),
-  onsen: require('./onsen'),
+  hibiki: require('./lib/hibiki'),
+  onsen: require('./lib/onsen'),
 }
 
 const log = console.log
@@ -78,7 +77,8 @@ const providers = Object.keys(nameMap)
   const debug = process.env.DEBUG
   const skipTrial = process.env.SKIP_TRIAL
   const workdir = path.normalize(process.env.WORKDIR || '')
-  const H = require('./history')
+
+  const H = require('./lib/history')
   let historyFile = null,
     historyLockFile = null,
     writeHistory = false
@@ -99,11 +99,16 @@ const providers = Object.keys(nameMap)
 
   const history = H(historyFile, historyLockFile, writeHistory)
 
-  // const ff = require('path').normalize(process.env.FFMPEG)
-  // if (!fs.existsSync(ff)) {
-  //   console.log('[err] FFMPEG is not exists. check file extention: ' + ff)
-  //   process.exit()
-  // }
+  if (!process.env.FFMPEG) {
+    console.log('[err] empty FFMPEG binary path')
+    process.exit()
+  }
+
+  const ff = require('path').normalize(process.env.FFMPEG)
+  if (!fs.existsSync(ff)) {
+    console.log('[err] FFMPEG is not exists. check file extention: ' + ff)
+    process.exit()
+  }
 
   try {
     fse.ensureDirSync(workdir)
