@@ -1,0 +1,687 @@
+[
+  {
+    "id": 235,
+    "directory_name": "kiseraji",
+    "display": true,
+    "show_contents_count": 8,
+    "brand_new": true,
+    "brand_new_sp": true,
+    "title": "その着せ替え人形(ビスク・ドール)はラジオをする",
+    "image": {
+      "url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/75/2c/0f4a683e72ca448b65f106a4771330a714ea/image?v=1639727349"
+    },
+    "new": true,
+    "list": true,
+    "delivery_interval": "毎週金曜19時配信",
+    "delivery_day_of_week": [
+      5
+    ],
+    "category_list": [
+      "new",
+      "radio",
+      "premium",
+      "bonus",
+      "anime"
+    ],
+    "copyright": "©福田晋一/SQUARE ENIX·「着せ恋」製作委員会",
+    "sponsor_name": "アニプレックス",
+    "updated": "1/21",
+    "performers": [
+      {
+        "id": 1928,
+        "name": "直田姫奈",
+        "allow_like": true
+      },
+      {
+        "id": 1929,
+        "name": "石毛翔弥",
+        "allow_like": true
+      }
+    ],
+    "related_links": [
+      {
+        "link_url": "https://bisquedoll-anime.com/",
+        "image": "https://d3bzklg4lms4gh.cloudfront.net/related_link/image/default/production/a6/51/df13f34c9e041e2d2c51265f118735a60e0b/image?v=1642751981"
+      }
+    ],
+    "related_infos": [],
+    "related_programs": [],
+    "guest_in_new_content": [],
+    "guests": [],
+    "contents": [
+      {
+        "id": 8005,
+        "title": "第4回",
+        "latest": false,
+        "media_type": "sound",
+        "program_id": 235,
+        "new": true,
+        "event": false,
+        "block": false,
+        "ongen_id": 8005,
+        "premium": false,
+        "free": true,
+        "delivery_date": "1/21",
+        "movie": false,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/75/2c/0f4a683e72ca448b65f106a4771330a714ea/image?v=1639727349",
+        "streaming_url": "https://onsen-ma3phlsvod.sslcs.cdngc.net/onsen-ma3pvod/_definst_/202201/kiseraji220121z9nm-04.mp4/playlist.m3u8",
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      },
+      {
+        "id": 8006,
+        "title": "第4回 おまけ",
+        "latest": false,
+        "media_type": "sound",
+        "program_id": 235,
+        "new": true,
+        "event": false,
+        "block": false,
+        "ongen_id": 8006,
+        "premium": true,
+        "free": false,
+        "delivery_date": "1/21",
+        "movie": false,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/75/2c/0f4a683e72ca448b65f106a4771330a714ea/image?v=1639727349",
+        "streaming_url": null,
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      },
+      {
+        "id": 7860,
+        "title": "第3回",
+        "latest": false,
+        "media_type": "sound",
+        "program_id": 235,
+        "new": false,
+        "event": false,
+        "block": false,
+        "ongen_id": 7860,
+        "premium": true,
+        "free": false,
+        "delivery_date": "1/14",
+        "movie": false,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/75/2c/0f4a683e72ca448b65f106a4771330a714ea/image?v=1639727349",
+        "streaming_url": null,
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      },
+      {
+        "id": 7861,
+        "title": "第3回 おまけ",
+        "latest": false,
+        "media_type": "sound",
+        "program_id": 235,
+        "new": false,
+        "event": false,
+        "block": false,
+        "ongen_id": 7861,
+        "premium": true,
+        "free": false,
+        "delivery_date": "1/14",
+        "movie": false,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/75/2c/0f4a683e72ca448b65f106a4771330a714ea/image?v=1639727349",
+        "streaming_url": null,
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      },
+      {
+        "id": 7646,
+        "title": "第2回",
+        "latest": false,
+        "media_type": "sound",
+        "program_id": 235,
+        "new": false,
+        "event": false,
+        "block": false,
+        "ongen_id": 7646,
+        "premium": true,
+        "free": false,
+        "delivery_date": "12/31",
+        "movie": false,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/75/2c/0f4a683e72ca448b65f106a4771330a714ea/image?v=1639727349",
+        "streaming_url": null,
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      },
+      {
+        "id": 7647,
+        "title": "第2回 おまけ",
+        "latest": false,
+        "media_type": "sound",
+        "program_id": 235,
+        "new": false,
+        "event": false,
+        "block": false,
+        "ongen_id": 7647,
+        "premium": true,
+        "free": false,
+        "delivery_date": "12/31",
+        "movie": false,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/75/2c/0f4a683e72ca448b65f106a4771330a714ea/image?v=1639727349",
+        "streaming_url": null,
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      },
+      {
+        "id": 7390,
+        "title": "第1回",
+        "latest": false,
+        "media_type": "sound",
+        "program_id": 235,
+        "new": false,
+        "event": false,
+        "block": false,
+        "ongen_id": 7390,
+        "premium": true,
+        "free": false,
+        "delivery_date": "12/17",
+        "movie": false,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/75/2c/0f4a683e72ca448b65f106a4771330a714ea/image?v=1639727349",
+        "streaming_url": null,
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      },
+      {
+        "id": 7391,
+        "title": "第1回 おまけ",
+        "latest": false,
+        "media_type": "sound",
+        "program_id": 235,
+        "new": false,
+        "event": false,
+        "block": false,
+        "ongen_id": 7391,
+        "premium": true,
+        "free": false,
+        "delivery_date": "12/17",
+        "movie": false,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/75/2c/0f4a683e72ca448b65f106a4771330a714ea/image?v=1639727349",
+        "streaming_url": null,
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "directory_name": "sega_girls",
+    "display": true,
+    "show_contents_count": 8,
+    "brand_new": false,
+    "brand_new_sp": false,
+    "title": "セガプラザ通信",
+    "image": {
+      "url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/c3/74/055cd23553c118b687a5fdbc5a822f88f240/image?v=1642747892"
+    },
+    "new": true,
+    "list": true,
+    "delivery_interval": "第8回：2022年1月21日(金) 配信（過去アーカイブ9回）",
+    "delivery_day_of_week": [
+      5
+    ],
+    "category_list": [
+      "movie"
+    ],
+    "copyright": "©SEGA",
+    "sponsor_name": "セガ",
+    "updated": "1/21",
+    "performers": [
+      {
+        "id": 261,
+        "name": "代永翼",
+        "allow_like": true
+      },
+      {
+        "id": 96,
+        "name": "白井悠介",
+        "allow_like": true
+      }
+    ],
+    "related_links": [
+      {
+        "link_url": "https://segaplaza.jp/special/promotion/",
+        "image": "https://d3bzklg4lms4gh.cloudfront.net/related_link/image/default/production/c1/d0/47998d4a67013dd5fb564366dbd3a490950d/image?v=1642747892"
+      }
+    ],
+    "related_infos": [
+      {
+        "category": "recommend",
+        "link_url": "https://twitter.com/sega_girls",
+        "caption": "セガ ガールズ通信 公式アカウント",
+        "image": "https://d3bzklg4lms4gh.cloudfront.net/related_info/image/default/production/7e/3b/5ea82fd6c445b93af212a6097e4450c3c832/image?v=1642747892"
+      }
+    ],
+    "related_programs": [
+      {
+        "title": "恋愛幕末カレシ～時の彼方で花咲く恋～WEBラジオ「イキザマラジオ恋」",
+        "directory_name": "bakumatsu",
+        "category": "recommend",
+        "image": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/20/25/cb86933c5bdb88570822a9d461d0415593b5/image?v=1612169707"
+      },
+      {
+        "title": "戦闘員、ラジオに派遣します！",
+        "directory_name": "kisaragi",
+        "category": "recommend",
+        "image": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/4b/03/826b4692ed38fa4cf99f72f1206597f92dd3/image?v=1627454141"
+      }
+    ],
+    "guest_in_new_content": [],
+    "guests": [],
+    "contents": [
+      {
+        "id": 8000,
+        "title": "第8回",
+        "latest": false,
+        "media_type": "movie",
+        "program_id": 28,
+        "new": true,
+        "event": false,
+        "block": false,
+        "ongen_id": 8000,
+        "premium": false,
+        "free": true,
+        "delivery_date": "1/21",
+        "movie": true,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/c3/74/055cd23553c118b687a5fdbc5a822f88f240/image?v=1642747892",
+        "streaming_url": "https://onsen-ma3phlsvod.sslcs.cdngc.net/onsen-ma3pvod/_definst_/202201/segagirls220121wt7a-08.mp4/playlist.m3u8",
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      },
+      {
+        "id": 7533,
+        "title": "第7回",
+        "latest": false,
+        "media_type": "movie",
+        "program_id": 28,
+        "new": false,
+        "event": false,
+        "block": false,
+        "ongen_id": 7533,
+        "premium": true,
+        "free": false,
+        "delivery_date": "12/27",
+        "movie": true,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/c3/74/055cd23553c118b687a5fdbc5a822f88f240/image?v=1642747892",
+        "streaming_url": null,
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      },
+      {
+        "id": 6887,
+        "title": "第6回",
+        "latest": false,
+        "media_type": "movie",
+        "program_id": 28,
+        "new": false,
+        "event": false,
+        "block": false,
+        "ongen_id": 6887,
+        "premium": true,
+        "free": false,
+        "delivery_date": "11/18",
+        "movie": true,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/c3/74/055cd23553c118b687a5fdbc5a822f88f240/image?v=1642747892",
+        "streaming_url": null,
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      },
+      {
+        "id": 6496,
+        "title": "第5回",
+        "latest": false,
+        "media_type": "movie",
+        "program_id": 28,
+        "new": false,
+        "event": false,
+        "block": false,
+        "ongen_id": 6496,
+        "premium": true,
+        "free": false,
+        "delivery_date": "10/22",
+        "movie": true,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/c3/74/055cd23553c118b687a5fdbc5a822f88f240/image?v=1642747892",
+        "streaming_url": null,
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      },
+      {
+        "id": 5769,
+        "title": "第4回",
+        "latest": false,
+        "media_type": "movie",
+        "program_id": 28,
+        "new": false,
+        "event": false,
+        "block": false,
+        "ongen_id": 5769,
+        "premium": true,
+        "free": false,
+        "delivery_date": "8/27",
+        "movie": true,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/c3/74/055cd23553c118b687a5fdbc5a822f88f240/image?v=1642747892",
+        "streaming_url": null,
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      },
+      {
+        "id": 5459,
+        "title": "第3回",
+        "latest": false,
+        "media_type": "movie",
+        "program_id": 28,
+        "new": false,
+        "event": false,
+        "block": false,
+        "ongen_id": 5459,
+        "premium": true,
+        "free": false,
+        "delivery_date": "7/30",
+        "movie": true,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/c3/74/055cd23553c118b687a5fdbc5a822f88f240/image?v=1642747892",
+        "streaming_url": null,
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      },
+      {
+        "id": 5011,
+        "title": "第2回",
+        "latest": false,
+        "media_type": "movie",
+        "program_id": 28,
+        "new": false,
+        "event": false,
+        "block": false,
+        "ongen_id": 5011,
+        "premium": true,
+        "free": false,
+        "delivery_date": "6/25",
+        "movie": true,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/c3/74/055cd23553c118b687a5fdbc5a822f88f240/image?v=1642747892",
+        "streaming_url": null,
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      },
+      {
+        "id": 4403,
+        "title": "第1回",
+        "latest": false,
+        "media_type": "movie",
+        "program_id": 28,
+        "new": false,
+        "event": false,
+        "block": false,
+        "ongen_id": 4403,
+        "premium": true,
+        "free": false,
+        "delivery_date": "5/24",
+        "movie": true,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/c3/74/055cd23553c118b687a5fdbc5a822f88f240/image?v=1642747892",
+        "streaming_url": null,
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      },
+      {
+        "id": 2121,
+        "title": "第25回",
+        "latest": false,
+        "media_type": "movie",
+        "program_id": 28,
+        "new": false,
+        "event": false,
+        "block": false,
+        "ongen_id": 2121,
+        "premium": true,
+        "free": false,
+        "delivery_date": "12/18",
+        "movie": true,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/c3/74/055cd23553c118b687a5fdbc5a822f88f240/image?v=1642747892",
+        "streaming_url": null,
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      },
+      {
+        "id": 1158,
+        "title": "第24回",
+        "latest": false,
+        "media_type": "movie",
+        "program_id": 28,
+        "new": false,
+        "event": false,
+        "block": false,
+        "ongen_id": 1158,
+        "premium": true,
+        "free": false,
+        "delivery_date": "9/18",
+        "movie": true,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/c3/74/055cd23553c118b687a5fdbc5a822f88f240/image?v=1642747892",
+        "streaming_url": null,
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      },
+      {
+        "id": 53,
+        "title": "第23回",
+        "latest": false,
+        "media_type": "movie",
+        "program_id": 28,
+        "new": false,
+        "event": false,
+        "block": false,
+        "ongen_id": 53,
+        "premium": true,
+        "free": false,
+        "delivery_date": "7/1",
+        "movie": true,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/c3/74/055cd23553c118b687a5fdbc5a822f88f240/image?v=1642747892",
+        "streaming_url": null,
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      }
+    ]
+  },
+  {
+    "id": 236,
+    "directory_name": "azarashi-soft",
+    "display": true,
+    "show_contents_count": 10,
+    "brand_new": true,
+    "brand_new_sp": true,
+    "title": "あざらしラジオ",
+    "image": {
+      "url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/56/29/c65af6af7d77b0164783919ab6b555dada3e/image?v=1642731259"
+    },
+    "new": true,
+    "list": true,
+    "delivery_interval": "毎月第3金曜日配信",
+    "delivery_day_of_week": [
+      5
+    ],
+    "category_list": [
+      "new",
+      "radio",
+      "game",
+      "premium",
+      "bonus"
+    ],
+    "copyright": "(c)あざらしそふと",
+    "sponsor_name": "あざらしそふと",
+    "updated": "1/21",
+    "performers": [
+      {
+        "id": 67,
+        "name": "風音",
+        "allow_like": true
+      },
+      {
+        "id": 511,
+        "name": "秋野花",
+        "allow_like": true
+      }
+    ],
+    "related_links": [
+      {
+        "link_url": "http://azarashi-soft.nexton-net.jp/",
+        "image": "https://d3bzklg4lms4gh.cloudfront.net/related_link/image/default/production/40/52/16aae45d94de1ed90f5df50072efd7a9e559/image?v=1642731259"
+      }
+    ],
+    "related_infos": [],
+    "related_programs": [
+      {
+        "title": "風音と桜川未央と桃井いちごの女子会ノリでラジオがしたい！",
+        "directory_name": "gashitai",
+        "category": "recommend",
+        "image": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/09/73/56267809877c225b0f26d913b45137b11b6c/image?v=1627454759"
+      }
+    ],
+    "guest_in_new_content": [],
+    "guests": [],
+    "contents": [
+      {
+        "id": 7998,
+        "title": "第1回",
+        "latest": false,
+        "media_type": "sound",
+        "program_id": 236,
+        "new": true,
+        "event": false,
+        "block": false,
+        "ongen_id": 7998,
+        "premium": false,
+        "free": true,
+        "delivery_date": "1/21",
+        "movie": false,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/56/29/c65af6af7d77b0164783919ab6b555dada3e/image?v=1642731259",
+        "streaming_url": "https://onsen-ma3phlsvod.sslcs.cdngc.net/onsen-ma3pvod/_definst_/202201/azarashi-soft220121tvx0-02.mp4/playlist.m3u8",
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      },
+      {
+        "id": 7999,
+        "title": "第1回 おまけ",
+        "latest": false,
+        "media_type": "sound",
+        "program_id": 236,
+        "new": true,
+        "event": false,
+        "block": false,
+        "ongen_id": 7999,
+        "premium": true,
+        "free": false,
+        "delivery_date": "1/21",
+        "movie": false,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/56/29/c65af6af7d77b0164783919ab6b555dada3e/image?v=1642731259",
+        "streaming_url": null,
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      },
+      {
+        "id": 7651,
+        "title": "第0回",
+        "latest": false,
+        "media_type": "sound",
+        "program_id": 236,
+        "new": false,
+        "event": false,
+        "block": false,
+        "ongen_id": 7651,
+        "premium": true,
+        "free": false,
+        "delivery_date": "1/1",
+        "movie": false,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/56/29/c65af6af7d77b0164783919ab6b555dada3e/image?v=1642731259",
+        "streaming_url": null,
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      },
+      {
+        "id": 7652,
+        "title": "第0回 おまけ",
+        "latest": false,
+        "media_type": "sound",
+        "program_id": 236,
+        "new": false,
+        "event": false,
+        "block": false,
+        "ongen_id": 7652,
+        "premium": true,
+        "free": false,
+        "delivery_date": "1/1",
+        "movie": false,
+        "poster_image_url": "https://d3bzklg4lms4gh.cloudfront.net/program_info/image/default/production/56/29/c65af6af7d77b0164783919ab6b555dada3e/image?v=1642731259",
+        "streaming_url": null,
+        "tag_image": {
+          "url": null
+        },
+        "guests": [],
+        "expiring": false
+      }
+    ]
+  }
+]
